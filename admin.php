@@ -1,23 +1,17 @@
 <?php
-
 // Inialize session
 session_start();
+if ($_SESSION['username']!="admin") {
+header('Location: index.php');
+}
 ?>
 <?php
   require_once("includes/connection.php");
 ?>
 
-<?php
-require_once("includes/connection.php");
-// Check, if username session is NOT set then this page will jump to login page
-if ($_SESSION['username']!='admin') {
-header('Location: adminlogin.php');
-}
-?>
-
 <?php include("includes/header.php"); 
 ?>
-    
+    kjlkjlkj
     <div class="sidebar-nav">
         <form class="search form-inline">
             <input type="text" placeholder="Search...">
@@ -27,6 +21,7 @@ header('Location: adminlogin.php');
         <ul id="dashboard-menu" class="nav nav-list collapse in">
             <li><a href="admin.php">Home</a></li>
             <li ><a href="rooms.php">Rooms</a></li>
+            <li><a href="assignment.php">Assignment</a></li>
             <li ><a href="grade.php">Grade</a></li>
             <li ><a href="media.html">Media</a></li>
             <li ><a href="calendar.html">Calendar</a></li>

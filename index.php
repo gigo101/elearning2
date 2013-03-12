@@ -11,12 +11,10 @@ header('Location: sign-in.php');
 <?php
 require_once("includes/connection.php");
 // Check, if username session is NOT set then this page will jump to login page
-
 ?>
 
 <?php include("includes/header.php"); 
 ?>
-    
     <div class="sidebar-nav">
         <form class="search form-inline">
             <input type="text" placeholder="Search...">
@@ -24,19 +22,11 @@ require_once("includes/connection.php");
 
         <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Dashboard</a>
         <ul id="dashboard-menu" class="nav nav-list collapse in">
-            <li><a href="index.php">Home</a></li>
+            <li class="active"><a href="index.php">Home</a></li>
             <li><a href="lesson.php">Lesson</a></li>
             <li><a href="student_assignment.php">Assignment</a></li>
             <li ><a href="student_grade.php">Grade</a></li>
-            <li ><a href="media.html">Media</a></li>
-            <li ><a href="calendar.html">Calendar</a></li>      
-        </ul>
-
-        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account<span class="label label-info">+3</span></a>
-        <ul id="accounts-menu" class="nav nav-list collapse">
-            <li ><a href="sign-in.html">Sign In</a></li>
-            <li ><a href="sign-up.php">Sign Up</a></li>
-            <li ><a href="reset-password.html">Reset Password</a></li>
+            <li ><a href="calendar.php">Calendar</a></li>      
         </ul>
 
         <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>Legal</a>
@@ -71,17 +61,31 @@ require_once("includes/connection.php");
         <div class="block">
             <p class="block-heading">Online E-Learning and Viewing of Grades</p>
               <div class="block-body">
-                <h3>Welcome to Online E-Learning and Viewing of Grades</h3>     
+                <h3>Announcements</h3>     
                     <div class="alert alert-error">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                             This website is on Beta Version, some of its functionalities are still under development.
                     </div>
 
-                    <div class="alert alert-info">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>Just a quick note:</strong> Hope you like the theme!
-                    </div>
-
+                    
+                     <?php      
+                        // 3. Perform database query
+                        $sql="Select announcement_id,visible,DATE_FORMAT(announcement_date,'%b/%d/%y') as ddate,announcement_content from announcement";
+                        $result = mysql_query($sql, $connection);
+                        if (!$result) {
+                            die("Database query failed: " . mysql_error());
+                        }
+                        // 4. Use returned data
+                        while ($row = mysql_fetch_array($result)) {
+                        echo "<div class=\"alert alert-info\">";
+                        echo "<button type=\"button\" class=\"close\" data-dismiss=\"alert\">×</button>";
+                            echo "Message:<br>{$row[3]}";
+                            echo "<div class=\"announcement\">Date publish: {$row[2]}</div>";
+                        echo "</div>";
+                        }
+                    
+                    ?>
+                   
               </div>
         </div>
                     
